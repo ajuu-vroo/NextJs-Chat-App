@@ -1,6 +1,6 @@
 const io = require('socket.io')(3001, {
     cors: {
-        origin: 'http://chatter-tau.vercel.app',
+        origin: 'https://chatter-tau.vercel.app',
     },
 });
 
