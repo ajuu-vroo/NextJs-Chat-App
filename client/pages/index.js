@@ -19,7 +19,7 @@ export default function Home() {
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
-    socket.current = io('ws://localhost:3001');
+    socket.current = io('ws://chatter.vercel.app');
 
   }, [])
   useEffect(() => {
