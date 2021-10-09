@@ -16,18 +16,18 @@ export default function Home() {
   const [user, setUser] = useState('');
   const [receiver, setReceiver] = useState('');
   const [disconnect, setDisconnect] = useState(false)
-  const [chat,setChat] = useState([]);
+  const [chat, setChat] = useState([]);
 
   useEffect(() => {
     socket.current = io('ws://localhost:3001');
 
   }, [])
   useEffect(() => {
-    socket.current.on('left', data => setDisconnect(true))
+    // socket.current.on('left', data => setDisconnect(true))
     socket.current.on('getMessage', data => {
       setChat([...chat, data])
     })
-    
+
   }, [chat])
 
   function userHandler(e) {
@@ -70,10 +70,10 @@ export default function Home() {
     //   setMsg([...msg, data])
     // })
     // setOwnMsg([...ownMsg, messageRef.current.value])
-    setChat([...chat,{message:messageRef.current.value, type:'mine'}])
+    setChat([...chat, { message: messageRef.current.value, type: 'mine' }])
     messageRef.current.value = ''
 
-    console.log(chat)
+    // console.log(chat)
   }
 
   return (
@@ -93,11 +93,11 @@ export default function Home() {
             <div className='h-[650px] lg:h-[500px] bg-white flex justify-between overflow-scroll'>
               <div>
                 <div className='h-7 relative' />
-                {chat?.map((item)=>{
-                  if(item.type==='mine'){
-                    return <h1 className="bg-gray-300 text-right pr-4 w-[150px] px-3 rounded-full mb-2 h-9 pt-1 font-mono text-gray-800 text-xl ml-52 mt-2 rounded-br-none">{item?.message}</h1>
-                  }else{
-                    return <h1 className="bg-purple-600 text-left text-white pl-4 w-[150px] rounded-full h-9 px-3 font-mono text-xl mt-2 pt-1 ml-1 rounded-bl-none" >{item?.message}</h1>
+                {chat?.map((item) => {
+                  if (item.type === 'mine') {
+                    return <h1 className="bg-gray-300 text-right pr-4 w-[150px] px-3 rounded-2xl mb-2 pt-1 font-mono text-gray-800 text-xl ml-52 mt-2 rounded-br-none h-auto">{item?.message}</h1>
+                  } else {
+                    return <h1 className="bg-purple-600 text-left text-white pl-4 w-[150px] rounded-2xl px-3 font-mono text-xl mt-2 pt-1 ml-1 rounded-bl-none h-auto" >{item?.message}</h1>
                   }
                 })}
               </div>
@@ -133,6 +133,14 @@ export default function Home() {
           {inputAlert2 && <button className='w-full h-full text-purple-700 font-semibold font-mono bg-gray-200 active:animate-ping ' onClick={() => setMessageDisplay(true)}>
             Start messaging</button>}
         </div>)}
+      <div className='absolute right-10 bottom-10 cursor-pointer group hidden md:flex'>
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white group-hover:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <video className=' shadow-2xl hidden group-hover:flex border-2 border-white' controls style={{ width: '500px', height: '290px' }}>
+        <source src="/chat-app.mp4" />
+      </video>
+      </div>
     </div>
   )
 }
